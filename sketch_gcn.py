@@ -388,20 +388,20 @@ def get_parameter_number(net):
 
 if __name__ == "__main__":
     model = Model()
-    print(get_parameter_number(model.encoder))
-    print(get_parameter_number(model.decoder))
-    epoch_load = 0
+    # print(get_parameter_number(model.encoder))
+    # print(get_parameter_number(model.decoder))
+    # epoch_load = 0
                                    
        
-    for epoch in range(500001):
-        if epoch <= epoch_load:
-            continue
-        if epoch_load:
-            model.load(f'./{hp.model_save}/encoderRNN_epoch_{epoch_load}.pth',
-                       f'./{hp.model_save}/decoderRNN_epoch_{epoch_load}.pth')
-        model.train(epoch)
+    # for epoch in range(500001):
+    #     if epoch <= epoch_load:
+    #         continue
+    #     if epoch_load:
+    #         model.load(f'./{hp.model_save}/encoderRNN_epoch_{epoch_load}.pth',
+    #                    f'./{hp.model_save}/decoderRNN_epoch_{epoch_load}.pth')
+    #     model.train(epoch)
 
-    '''
+    
                                            
     model.conditional_generation(0)
-    #'''
+    

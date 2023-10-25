@@ -448,10 +448,10 @@ def remove_white_space_sketch(sketch):
 def scale_sketch(sketch, size=(448, 448)):
     [_, _, h, w] = canvas_size_google(sketch)
     if h >= w:
-        sketch_normalize = sketch / np.array([[h, h, 1]], dtype=np.float)
+        sketch_normalize = sketch / np.array([[h, h, 1]], dtype=float)
     else:
-        sketch_normalize = sketch / np.array([[w, w, 1]], dtype=np.float)
-    sketch_rescale = sketch_normalize * np.array([[size[0], size[1], 1]], dtype=np.float)
+        sketch_normalize = sketch / np.array([[w, w, 1]], dtype=float)
+    sketch_rescale = sketch_normalize * np.array([[size[0], size[1], 1]], dtype=float)
     return sketch_rescale.astype("int16")
 
 
@@ -460,9 +460,9 @@ if __name__ == '__main__':
     import os
 
     prob = 0.3
-    for each_np_path in glob.glob("../dataset/*.npz"):
+    for each_np_path in glob.glob("./dataset/*.npz"):
         catname = each_np_path.split("/")[-1].split(".")[0]
-        os.makedirs(f"/root/human-study/human/{prob}/{catname}", exist_ok=True)
+        os.makedirs(f"data/human-study/human/{prob}/{catname}", exist_ok=True)
         dataset_np = np.load(each_np_path, encoding='latin1', allow_pickle=True)
 			 
         npz_ = dataset_np['test']
@@ -474,6 +474,7 @@ if __name__ == '__main__':
 					   
             gra, adj = make_graph(sample, graph_picture_size=64,
                                   mask_prob=prob, random_color=False, channel_3=False,
-                                  save=f"/root/human-study/human/{prob}/{catname}/{index}.jpg")
+                                  save=f"data/human-study/human/{prob}/{catname}/{index}.jpg")
+            print("index")
             print(index)
 						 

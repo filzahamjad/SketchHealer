@@ -3,12 +3,10 @@ import torch
 
 class HParams:
     def __init__(self):
-        self.data_location = ''#location of  of origin data
-        self.category = ["airplane.npz", "angel.npz", "alarm clock.npz", "apple.npz",
-                         "butterfly.npz", "belt.npz", "bus.npz",
-                         "cake.npz", "cat.npz", "clock.npz", "eye.npz", "fish.npz",
-                         "pig.npz", "sheep.npz", "spider.npz", "The Great Wall of China.npz",
-                         "umbrella.npz"]
+        self.data_location = 'dataset/'#location of  of origin data
+        self.category = ["moon.npz", "airplane.npz", "fish.npz",'alarm clock.npz','apple.npz',
+          "bed.npz", "brain.npz", "apple.npz", "bulldozer.npz", "car.npz" ,"chair.npz","flower.npz","helmet.npz","mountain.npz","mug.npz","nail.npz","pillow.npz","pizza.npz","purse.npz","river.npz"]
+
         self.model_save = "model_save"
         
         self.enc_hidden_size = 256  # encoder LSTM h size

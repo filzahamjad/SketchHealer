@@ -28,7 +28,7 @@ class SketchesDataset:
         self.path = path
         self.category = category
         self.mode = mode
-
+        print(path)
         tmp_sketches = []
         for c in self.category:
             dataset = np.load(os.path.join(self.path, c), encoding='latin1', allow_pickle=True)
@@ -233,6 +233,15 @@ class Model:
                 count = 0
                 category_count = sketch_dataset.sketches_categroy_count[category_flag]
                 print(f"{category_name} finished")
+                # _sketch = np.stack([seq_x, seq_y, seq_z]).T
+                # try:
+                #     sketch_cv = draw_three(_sketch, img_size=256)
+                # except Exception as e:
+                #     _sketch = np.zeros((256, 256, 1))
+                # os.makedirs(f"./{save_middle_path}/sketch/{category_name}", exist_ok=True)
+                # cv2.imwrite(f"./{save_middle_path}/sketch/{category_name}/{sketch_index}.jpg", _sketch)
+
+                # make_image(sequence, count - 1, name=f"_{category_name}", path=f"./{save_middle_path}/sketch/")
             if sketch_index % 100 != 0 or True:
                 continue
             print(f"drawing {category_name} {count}")
@@ -281,7 +290,7 @@ class Model:
             os.makedirs(f"./{save_middle_path}/sketch/{category_name}", exist_ok=True)
             cv2.imwrite(f"./{save_middle_path}/sketch/{category_name}/{sketch_index}.jpg", _sketch)
 
-            # make_image(sequence, count - 1, name=f"_{category_name}", path=f"./{save_middle_path}/sketch/")
+            make_image(sequence, count - 1, name=f"_{category_name}", path=f"./{save_middle_path}/sketch/")
                                                                       
                       
 
@@ -389,11 +398,23 @@ if __name__ == "__main__":
     #            "./model_save_v2_1/decoderRNN_epoch_99000.pth")
     #model.load(f"./{hp.model_save}/encoderRNN_epoch_8000_sgy.pth",
     #           f"./{hp.model_save}/decoderRNN_epoch_8000_sgy.pth")
-    model.load(f"./model_save/encoderRNN_epoch_146000.pth",
-               f"./model_save/decoderRNN_epoch_146000.pth")
+
+    # model.load_state_dict(torch.load(f"./pretrain_model/encoderRNN_epoch_146000.pth", map_location="cpu"))
+
+# Load the decoder model from the CPU
+    # model.load_state_dict(torch.load(f"./pretrain_model/decoderRNN_epoch_146000.pth", map_location="cpu"))
+    model.parameters = torch.load(f"./pretrain_model/encoderRNN_epoch_146000.pth", map_location="cpu")
+    model.parameters = torch.load(f"./pretrain_model/decoderRNN_epoch_146000.pth", map_location="cpu")
+
+
+    # model.load(f"./pretrain_model/encoderRNN_epoch_146000.pth",
+    #            f"./pretrain_model/decoderRNN_epoch_146000.pth")
 
     print(hp.mask_prob, hp.Nmax)
-    model.validate(sketch_dataset, save_middle_path=f"result/visualize2/146000/{hp.mask_prob}")
+    # middle_path = np.load(f"result/visualize2/146000/{hp.mask_prob}")
+    model.validate(sketch_dataset, save_middle_path=f"dataset/")
+    plt.imshow(middle_path, cmap="gray")
+    plt.show()
     exit(0)
                          
                                        
